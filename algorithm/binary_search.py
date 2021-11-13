@@ -1,8 +1,5 @@
 
 
-from cv2 import MIXED_CLONE
-
-
 def binary_search(search_list, item):
     low = 0
     high = len(search_list)-1
