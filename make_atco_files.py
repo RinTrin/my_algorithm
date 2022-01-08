@@ -6,6 +6,7 @@ def makedir(path):
     if os.path.exists(path):
         print('WRONG NUMBER')
         print('TRY AGAIN')
+        raise IndexError
     else:
         os.makedirs(path)
 
@@ -22,15 +23,25 @@ def main(args):
     dir_path = os.path.join(args.org_path, str(args.num))
     makedir(dir_path)
 
+    file_paths = []
+
+    input_strs =  "N = int(input()) \n"
+    input_strs += "N, M = map(int, input().split()) \n"
+    input_strs += "p_list = list(map(int, input().split())) \n"
+    input_strs += "xy_matrix = [list(map(int, input().split())) for _ in range(N)] \n"
+
     for al in ['a', 'b','c','d','e']:
         file_path = os.path.join(dir_path, al+'.py')
+        file_paths.append(file_path)
         with open(file_path, 'w') as f:
-            f.write('')
+            f.write(input_strs)
 
+    return file_paths
 
 if __name__ == '__main__':
     args = make_args()
-    main(args)
-    # subprocess.run(["cd", str(os.path.join(args.org_path, str(args.num)))], shell=True)
+    fls = main(args)
+    for fl in fls:
+        subprocess.run(["code", fl], shell=False)
     # res.stdout.decode("utf8")
 
